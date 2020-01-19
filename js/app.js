@@ -17,7 +17,7 @@ const tasks = [
 
     {
         _id: '5d2ca546345fasdf34asdgasf345643',
-        completed: true,
+        completed: false,
         body:
             'Last Task non ea quis occaecat ad culpa amet deserunt incididunt elit fugiat pariatur. Exercitation commodo culpa in veniam proident laboris in. Excepteur cupidatat eiusmod dolor consectetur exercitation nulla aliqua veniam fugiat irure mollit. Eu dolor dolor excepteur pariatur aute do do ut pariatur consequat reprehenderit deserunt.\r\n',
         title: 'Eu ea incididunt sunt consectetur fugiat non. last Task',
@@ -190,14 +190,16 @@ const tasks = [
             objOfTasks[id].completed = false;
         }
 
-
-        if(uncompletedObject && completedButton.tagName === 'BUTTON'){
-             li.remove();  //remove element li, if we have just clicked on the button of uncompleted tasks
-        }
-
-        //TODO I guess this functional is extra. Discuss that moment with others
         deleteAllLi();
         renderAllTasks(sortingTasks());
+
+        /*if uncompleted object isset and we have clicked on completed button, then
+           make a click on button uncompleted tasks to renew our uncompleted Object
+           function, see function UnCompletedTasksHandler
+           Maybe it is not optimal, there is no time. Rafactor later. */
+        if(uncompletedObject){
+            document.querySelectorAll('div.completedButtons button')[1].click();
+        }
     }
     
     //notice if we haven't any task;
@@ -255,6 +257,7 @@ const tasks = [
 
     let allTasksButton = document.querySelectorAll('div.completedButtons button')[0];
     let uncompletedTasksButton = document.querySelectorAll('div.completedButtons button')[1];
+    
     function UnCompletedTasksHandler(e) {
         allTasksButton.classList.replace('btn-primary','btn-outline-primary');
         uncompletedTasksButton.classList.replace('btn-outline-warning','btn-warning');
@@ -268,6 +271,7 @@ const tasks = [
 
         deleteAllLi();
         renderAllTasks(uncompletedObject);
+        console.log('uncompleted object btn', uncompletedObject);
     }
 
 
@@ -277,6 +281,7 @@ const tasks = [
         deleteAllLi();
         uncompletedObject = null;
         renderAllTasks(sortingTasks());
+        console.log('uncompleted object All tasks', uncompletedObject);
     }
 
     //sorting of uncompleted task, returns object for function renderAllTasks
