@@ -105,16 +105,12 @@ const tasks = [
 
 
 
-
-
-
-
     const listContainer = document.querySelector('ul.list-group');
     const form = document.forms['addTask'];
     const inputTitle = form.elements['title'];
     const inputBody = form.elements['body'];
-
-
+    const themeSelect = document.getElementById('themeSelect');
+    themeSelect.addEventListener('change', onThemeSelectHandler);
     //EVENTS
 
     renderAllTasks(sortingTasks()); //function that renders all tasks
@@ -375,6 +371,22 @@ const tasks = [
 
     uncompletedTasksButton.addEventListener('click', UnCompletedTasksHandler);
     allTasksButton.addEventListener('click', allTasksHandler);
+
+
+
+    function onThemeSelectHandler(e) {
+       const selectedTheme = themeSelect.value;
+       const isConfirmed = confirm(`Вы действительно хотите изменить тему на ${selectedTheme}`);
+       if(!isConfirmed) return;
+       setTheme(selectedTheme);
+    }
+
+    function setTheme(themeName){
+       let selectedThemeObj = themes[themeName];
+    }
+
+   
+
 })(tasks);
 
 
