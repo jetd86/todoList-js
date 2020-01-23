@@ -103,7 +103,7 @@ const tasks = [
         },
     };
 
-
+    let lastSelectedTheme = 'default';
 
     const listContainer = document.querySelector('ul.list-group');
     const form = document.forms['addTask'];
@@ -292,11 +292,11 @@ const tasks = [
         div.classList.add('completedButtons');
         const allTasksBtn = document.createElement('button');
         allTasksBtn.textContent = 'Все задачи';
-        allTasksBtn.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+        allTasksBtn.classList.add('btn', 'btn-outline-primary',  'btn-sm');
         allTasksBtn.type = 'button';
 
         const uncompletedTasksButton = document.createElement('button');
-        uncompletedTasksButton.classList.add('btn', 'btn-sm', 'btn-outline-warning');
+        uncompletedTasksButton.classList.add('btn', 'btn-outline-warning', 'btn-sm');
         uncompletedTasksButton.textContent = 'Незавершенные задачи';
         uncompletedTasksButton.type = 'button';
         div.append(allTasksBtn, uncompletedTasksButton);
@@ -377,8 +377,12 @@ const tasks = [
     function onThemeSelectHandler(e) {
        const selectedTheme = themeSelect.value;
        const isConfirmed = confirm(`Вы действительно хотите изменить тему на ${selectedTheme}`);
-       if(!isConfirmed) return;
+       if(!isConfirmed){
+           themeSelect.value = lastSelectedTheme;
+           return;
+       }
        setTheme(selectedTheme);
+        lastSelectedTheme  = selectedTheme;
     }
 
     function setTheme(themeName){
