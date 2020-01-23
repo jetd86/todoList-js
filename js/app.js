@@ -383,9 +383,10 @@ const tasks = [
 
     function setTheme(themeName){
        let selectedThemeObj = themes[themeName];
+       Object.entries(selectedThemeObj).forEach(([key, value]) => {
+           document.documentElement.style.setProperty(key,value);
+       });
     }
-
-   
 
 })(tasks);
 
