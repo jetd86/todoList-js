@@ -113,8 +113,9 @@ const tasks = [
     let uncompletedObject = null; //variable only for object with uncompleted tasks
     //if not null, that we have just clicked on the button of uncompleted tasks
     let lastSelectedTheme = localStorage.getItem('app_theme') || 'default';
+    themeSelect.value = lastSelectedTheme;
 
-
+    console.log(lastSelectedTheme);
     //EVENTS
     setTheme(lastSelectedTheme);
     renderAllTasks(sortingTasks()); //function that renders all tasks
@@ -379,7 +380,6 @@ const tasks = [
     function onThemeSelectHandler(e) {
        const selectedTheme = themeSelect.value;
        const isConfirmed = confirm(`Вы действительно хотите изменить тему на ${selectedTheme}`);
-       console.log(selectedTheme);
        if(!isConfirmed){
            themeSelect.value = lastSelectedTheme;
            return;
