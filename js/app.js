@@ -26,10 +26,8 @@ const tasks = [
 
 ];
 
-
 //self-calling function, in order to close our names from global scope, made only for safety
 (function (arrOfTasks) {
-
     //make a new object, where key will be ID from object task
     const objOfTasks = arrOfTasks.reduce((acc, task) => {
         acc[task._id] = task;
@@ -104,7 +102,6 @@ const tasks = [
     };
 
 
-
     const listContainer = document.querySelector('ul.list-group');
     const form = document.forms['addTask'];
     const inputTitle = form.elements['title'];
@@ -115,7 +112,6 @@ const tasks = [
     let lastSelectedTheme = localStorage.getItem('app_theme') || 'default';
     themeSelect.value = lastSelectedTheme;
 
-    console.log(lastSelectedTheme);
     //EVENTS
     setTheme(lastSelectedTheme);
     renderAllTasks(sortingTasks()); //function that renders all tasks
@@ -213,7 +209,6 @@ const tasks = [
         return {...newTask};
     }
 
-
     //DELETE TASK EVENT
     function deleteTaskFromObjOfTasks(id) {
         const isConfirm = confirm('Точно удалить задачу?');
@@ -289,7 +284,6 @@ const tasks = [
 
 
     //functional of all tasks and uncompleted tasks
-    //adding buttons
     function completedButtons() {
         const div = document.createElement('div');
         div.classList.add('completedButtons');
@@ -345,7 +339,6 @@ const tasks = [
         console.log('uncompleted object btn', uncompletedObject);
     }
 
-
     function allTasksHandler(e) {
         allTasksButton.classList.replace('btn-outline-primary','btn-primary');
         uncompletedTasksButton.classList.replace('btn-warning','btn-outline-warning');
@@ -375,8 +368,6 @@ const tasks = [
     uncompletedTasksButton.addEventListener('click', UnCompletedTasksHandler);
     allTasksButton.addEventListener('click', allTasksHandler);
 
-
-
     function onThemeSelectHandler(e) {
        const selectedTheme = themeSelect.value;
        const isConfirmed = confirm(`Вы действительно хотите изменить тему на ${selectedTheme}`);
@@ -390,14 +381,10 @@ const tasks = [
         localStorage.setItem('app_theme', selectedTheme);
     }
 
-
     function setTheme(themeName){
        let selectedThemeObj = themes[themeName];
        Object.entries(selectedThemeObj).forEach(([key, value]) => {
            document.documentElement.style.setProperty(key,value);
        });
     }
-
 })(tasks);
-
-
