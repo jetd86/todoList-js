@@ -103,21 +103,26 @@ const tasks = [
         },
     };
 
-    let lastSelectedTheme = 'default';
+
 
     const listContainer = document.querySelector('ul.list-group');
     const form = document.forms['addTask'];
     const inputTitle = form.elements['title'];
     const inputBody = form.elements['body'];
     const themeSelect = document.getElementById('themeSelect');
-    themeSelect.addEventListener('change', onThemeSelectHandler);
-    //EVENTS
+    let uncompletedObject = null; //variable only for object with uncompleted tasks
+    //if not null, that we have just clicked on the button of uncompleted tasks
+    let lastSelectedTheme = localStorage.getItem('app_theme') || 'default';
 
+
+    //EVENTS
+    setTheme(lastSelectedTheme);
     renderAllTasks(sortingTasks()); //function that renders all tasks
     form.addEventListener('submit', onFormSubmitHandler);
     listContainer.addEventListener('click', onDeleteHandler);
     listContainer.addEventListener('click', onCompletedHandler);
-
+    themeSelect.addEventListener('change', onThemeSelectHandler);
+    
     function renderAllTasks(taskList) {
         if (!taskList) {
             console.error('Передайте список задач');
@@ -233,9 +238,6 @@ const tasks = [
         }
     }
 
-    let uncompletedObject = null; //variable only for object with uncompleted tasks
-    //if not null, that we have just clicked on the button of uncompleted tasks
-
     function onCompletedHandler(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -285,7 +287,7 @@ const tasks = [
     }
 
 
-    //functional of all tasks and uncomplished tasks
+    //functional of all tasks and uncompleted tasks
     //adding buttons
     function completedButtons() {
         const div = document.createElement('div');
@@ -377,13 +379,17 @@ const tasks = [
     function onThemeSelectHandler(e) {
        const selectedTheme = themeSelect.value;
        const isConfirmed = confirm(`Вы действительно хотите изменить тему на ${selectedTheme}`);
+       console.log(selectedTheme);
        if(!isConfirmed){
            themeSelect.value = lastSelectedTheme;
            return;
        }
+
        setTheme(selectedTheme);
-        lastSelectedTheme  = selectedTheme;
+        lastSelectedTheme = selectedTheme;
+        localStorage.setItem('app_theme', selectedTheme);
     }
+
 
     function setTheme(themeName){
        let selectedThemeObj = themes[themeName];
